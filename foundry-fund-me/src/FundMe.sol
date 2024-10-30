@@ -22,8 +22,11 @@ contract FundMe {
     // State variables
     uint256 public constant MINIMUM_USD = 5 * 10 ** 18;
     address private immutable i_owner;
+    //storage 0
     address[] private s_funders;
+    //storage 1
     mapping(address => uint256) private s_addressToAmountFunded;
+    //storage 2
     AggregatorV3Interface private s_priceFeed;
 
     // Events (we have none!)
