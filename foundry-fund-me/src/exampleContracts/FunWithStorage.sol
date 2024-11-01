@@ -45,7 +45,7 @@ contract FunWithStorage {
     function doStuff2() public {
         // Default to 0 if the array is empty, so index 0 = 0
         // uint8 can only hold values between 0 and 255
-        uint8 newVar = 0; //SLOAD
+        uint8 newVar = 0; // SLOAD
 
         if (myArray2.length > 0) {
             newVar = myArray2[myArray2.length - 1] + 1;

@@ -1,2 +1,3 @@
-FundMeTest:testWithdrawFromASingleFunder() (gas: 83827)
-FundMeTest:testWithdrawFromMultipleFunders() (gas: 533924)
+FundMeTest:testWithdrawFromASingleFunder() (gas: 83844)
+FundMeTest:testWithdrawFromMultipleFunders() (gas: 533853)
+FundMeTest:testWithdrawFromMultipleFundersCheaper() (gas: 532776)
