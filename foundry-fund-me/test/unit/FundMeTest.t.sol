@@ -12,6 +12,7 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interf
 contract FundMeTest is Test {
     FundMe fundMe;
     DeployFundMe deployFundMe;
+    address ethUsdPriceFeed;
 
     //address public USER = makeAddr("user");
     address public constant USER = address(1);
@@ -22,7 +23,7 @@ contract FundMeTest is Test {
     function setUp() external {
         //fundMe = new FundMe(0x694AA1769357215DE4FAC081bf1f309aDC325306);
         deployFundMe = new DeployFundMe();
-        fundMe = deployFundMe.run();
+        (fundMe, ethUsdPriceFeed) = deployFundMe.run();
         vm.deal(USER, STARTING_USER_BALANCE);
     }
 
@@ -40,13 +41,12 @@ contract FundMeTest is Test {
         assertEq(version, 4);
     }
 
-    // function testPriceFeedAddress() public view {
-    //     AggregatorV3Interface priceFeedAddress = fundMe.getPriceFeed();
-    //     assertEq(
-    //         address(priceFeedAddress),
-    //         address(0x694AA1769357215DE4FAC081bf1f309aDC325306)
-    //     );
-    // }
+    function testPriceFeedAddress() public view {
+        console.log("ethUsdPriceFeed: %s", ethUsdPriceFeed);
+        AggregatorV3Interface priceFeedAddress = fundMe.getPriceFeed();
+        console.log("fundMe.getPriceFeed(): %s", address(priceFeedAddress));
+        assertEq(address(priceFeedAddress), address(ethUsdPriceFeed));
+    }
 
     function testFundFailsWithoutEnoughETH() public {
         vm.expectRevert();

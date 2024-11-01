@@ -10,6 +10,7 @@ import {Test, console} from "forge-std/Test.sol";
 contract InteractionsTest is Test {
     FundMe public fundMe;
     DeployFundMe deployFundMe;
+    address ethUsdPriceFeed;
 
     uint256 public constant SEND_VALUE = 0.1 ether; // just a value to make sure we are sending enough!
     uint256 public constant STARTING_USER_BALANCE = 10 ether;
@@ -23,7 +24,7 @@ contract InteractionsTest is Test {
 
     function setUp() external {
         deployFundMe = new DeployFundMe();
-        fundMe = deployFundMe.run();
+        (fundMe, ethUsdPriceFeed) = deployFundMe.run();
         vm.deal(USER, STARTING_USER_BALANCE);
     }
 
