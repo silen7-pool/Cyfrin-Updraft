@@ -36,11 +36,11 @@ contract FunWithStorage {
         i_not_in_storage = 123;
     }
 
-    function doStuff() public view {
-        uint256 newVar = favoriteNumber + 1; // SLOAD
-        bool otherVar = someBool; // SLOAD
-        // ^^ memory / stack variables
-    }
+    // function doStuff() public view {
+    //     uint256 newVar = favoriteNumber + 1; // SLOAD
+    //     bool otherVar = someBool; // SLOAD
+    //     // ^^ memory / stack variables
+    // }
 
     function doStuff2() public {
         // Default to 0 if the array is empty, so index 0 = 0
