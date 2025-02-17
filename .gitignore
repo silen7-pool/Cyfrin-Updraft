@@ -5,11 +5,11 @@ out/
 # Ignores development broadcast logs
 # /broadcast/*/31337/
 # /broadcast/**/dry-run/
-# /broadcast/
+broadcast/
 
 # Ignore all sub-project broadcast folders
-foundry-simple-storage/broadcast/
-foundry-fund-me/broadcast/
+# foundry-simple-storage/broadcast/
+# foundry-fund-me/broadcast/
 
 # Docs
 docs/
@@ -18,8 +18,8 @@ docs/
 .env
 
 # Ignore all lib folders
-# /lib/
-foundry-simple-storage/lib/
-foundry-fund-me/lib/
+lib/
+#foundry-simple-storage/lib/
+#foundry-fund-me/lib/
 
 .DS_Store
