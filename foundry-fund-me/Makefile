@@ -58,7 +58,7 @@ deploy-zk-sepolia:
 # SENDER_ADDRESS_SEPOLIA := 
  
 fund:
-	@forge script script/Interactions.s.sol:FundFundMe --sender $(SENDER_ADDRESS_SEPOLIA) $(NETWORK_ARGS)
+	@forge script script/Interactions.s.sol:FundFundMe --sender $(SENDER_ADDRESS1_SEPOLIA) $(NETWORK_ARGS)
 
 withdraw:
-	@forge script script/Interactions.s.sol:WithdrawFundMe --sender $(SENDER_ADDRESS_SEPOLIA) $(NETWORK_ARGS)
+	@forge script script/Interactions.s.sol:WithdrawFundMe --sender $(SENDER_ADDRESS1_SEPOLIA) $(NETWORK_ARGS)
