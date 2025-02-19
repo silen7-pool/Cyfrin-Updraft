@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 contract StorageTest {
-    // https://x.com/silent_pooler/status/1851637048064491626
+    // https://x.com/silen7_pool/status/1851637048064491626
 
     // myArray.length is stored at slot 0
     // while values are stored starting at slot keccak256(0)
