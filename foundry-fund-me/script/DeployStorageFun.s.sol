@@ -30,6 +30,8 @@ contract DeployFunWithStorage is Script {
         bytes32 firstElementStorageSlot = keccak256(
             abi.encode(arrayStorageSlotLength)
         );
+        console.log("First element storage slot in myArray:");
+        console.logBytes32(firstElementStorageSlot);
         bytes32 value = vm.load(contractAddress, firstElementStorageSlot);
         console.log("First element in myArray:");
         console.logBytes32(value);
@@ -40,6 +42,8 @@ contract DeployFunWithStorage is Script {
         bytes32 firstElementStorageSlot = keccak256(
             abi.encode(arrayStorageSlotLength)
         );
+        console.log("First element storage slot in myArray2:");
+        console.logBytes32(firstElementStorageSlot);
         bytes32 value = vm.load(contractAddress, firstElementStorageSlot);
         console.log("First element in myArray2:");
         console.logBytes32(value);
