@@ -5,7 +5,7 @@ import {Script} from "forge-std/Script.sol";
 import {HelperConfig} from "./HelperConfig.s.sol";
 import {Raffle} from "../src/Raffle.sol";
 
-import {CreateSubscription, FundSubscription, AddConsumer} from "./Interactions.s.sol";
+import {CreateSubscription, FundSubscription, AddConsumer, GetSubscriptionBalance} from "./Interactions.s.sol";
 
 contract DeployRaffle is Script {
     function run() external returns (Raffle, HelperConfig) {
@@ -34,6 +34,23 @@ contract DeployRaffle is Script {
             helperConfig.setConfig(block.chainid, config);
         }
 
+        // Will send 3 link if the balance is less than 1 link for the subId and network is different than local chain
+
+        GetSubscriptionBalance getSubscriptionBalance = new GetSubscriptionBalance();
+        uint96 balanceInLink = getSubscriptionBalance.getSubscriptionBalance(
+            config.vrfCoordinatorV2_5,
+            config.subscriptionId
+        );
+        if (block.chainid != 31337 && balanceInLink < 1 ether) {
+            FundSubscription fundSubscription = new FundSubscription();
+            fundSubscription.fundSubscription(
+                config.vrfCoordinatorV2_5,
+                config.subscriptionId,
+                config.link,
+                config.account
+            );
+        }
+
         vm.startBroadcast(config.account);
         Raffle raffle = new Raffle(
             config.subscriptionId,
@@ -45,13 +62,14 @@ contract DeployRaffle is Script {
         );
         vm.stopBroadcast();
 
-        // We already have a broadcast in here
+        // We already have a broadcast in AddConsumer contract in Interactions.s.sol
         addConsumer.addConsumer(
             address(raffle),
             config.vrfCoordinatorV2_5,
             config.subscriptionId,
             config.account
         );
+
         return (raffle, helperConfig);
     }
 }
