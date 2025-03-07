@@ -16,3 +16,6 @@ docs/
 lib/
 
 .DS_Store
+
+json.json
+constructor-args.txt
