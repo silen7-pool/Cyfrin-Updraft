@@ -5,7 +5,7 @@ pragma solidity ^0.8.19;
 import {DeployRaffle} from "script/DeployRaffle.s.sol";
 import {Raffle} from "src/Raffle.sol";
 import {HelperConfig} from "script/HelperConfig.s.sol";
-import {Test, console2} from "forge-std/Test.sol";
+import {Test, console2, console} from "forge-std/Test.sol";
 import {Vm} from "forge-std/Vm.sol";
 import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
 import {LinkToken} from "test/mocks/LinkToken.sol";
@@ -106,6 +106,7 @@ contract RaffleTest is Test, CodeConstants {
     /*//////////////////////////////////////////////////////////////
                               CHECKUPKEEP
     //////////////////////////////////////////////////////////////*/
+
     function testCheckUpkeepReturnsFalseIfItHasNoBalance() public {
         // Arrange
         vm.warp(block.timestamp + automationUpdateInterval + 1);
@@ -252,6 +253,18 @@ contract RaffleTest is Test, CodeConstants {
         );
     }
 
+    function testFulfillRandomWordsCanOnlyBeCalledAfterPerformUpkeepFuzz(
+        uint256 randomRequestId
+    ) public raffleEntered skipFork {
+        // Arrange
+        // Act / Assert
+        vm.expectRevert(VRFCoordinatorV2_5Mock.InvalidRequest.selector);
+        VRFCoordinatorV2_5Mock(vrfCoordinatorV2_5).fulfillRandomWords(
+            randomRequestId,
+            address(raffle)
+        );
+    }
+
     function testFulfillRandomWordsPicksAWinnerResetsAndSendsMoney()
         public
         raffleEntered
@@ -294,10 +307,16 @@ contract RaffleTest is Test, CodeConstants {
         uint256 winnerBalance = recentWinner.balance;
         uint256 endingTimeStamp = raffle.getLastTimeStamp();
         uint256 prize = raffleEntranceFee * (additionalEntrances + 1);
+        uint256 numberOfPlayer = raffle.getNumberOfPlayers();
 
         assert(recentWinner == expectedWinner);
         assert(uint256(raffleState) == 0);
         assert(winnerBalance == startingBalance + prize);
         assert(endingTimeStamp > startingTimeStamp);
+        assert(numberOfPlayer == 0);
+    }
+
+    function testGetNumWordReturnNUM_WORDS() public view {
+        assert(raffle.getNumWords() == 1);
     }
 }
