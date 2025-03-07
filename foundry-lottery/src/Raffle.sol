@@ -174,7 +174,7 @@ contract Raffle is VRFConsumerBaseV2Plus, AutomationCompatibleInterface {
                 )
             })
         );
-        // Quiz... is this redundant?
+        // Quiz... is this redundant? yes because we already event a requestId with chainlinkVRF
         emit RequestedRaffleWinner(requestId);
     }
 
